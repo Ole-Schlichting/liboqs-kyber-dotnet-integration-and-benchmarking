@@ -46,8 +46,8 @@ internal static class NativeMethods {
     [DllImport(OqsDll, CallingConvention = CallingConvention.Cdecl)]
     public static extern void OQS_init();
 
-    // [DllImport(OqsDll, CallingConvention = CallingConvention.Cdecl)]
-    // public static extern void OQS_destroy(); // If needed for cleanup
+    [DllImport(OqsDll, CallingConvention = CallingConvention.Cdecl)]
+    public static extern void OQS_destroy(); // If needed for cleanup
 
     // Static constructor to call OQS_init() once when this class is first accessed
     static NativeMethods() {

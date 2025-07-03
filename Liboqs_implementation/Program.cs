@@ -10,10 +10,9 @@ public class Program {
     static void Main(string[] args) {
         Kyber_Benchmarking kyber512 = new Kyber_Benchmarking();
         RSA_Benchmarking rsa = new RSA_Benchmarking();
-        rsa.RunSystemRsaBenchmark(10, 2048);
+        rsa.RunSystemRsaBenchmark(100, 2048);
 
-
-        //kyber512.Run("Kyber768" ,100);
+        kyber512.Run("Kyber1024", 10000);
 
     }
 

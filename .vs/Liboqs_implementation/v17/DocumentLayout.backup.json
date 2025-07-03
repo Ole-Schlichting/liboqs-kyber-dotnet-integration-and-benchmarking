@@ -3,24 +3,24 @@
   "WorkspaceRootPath": "C:\\Users\\olesc\\Desktop\\liboqs\\liboqs-Kyber-.NET-integration-and-benchmarking\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{3C4AE2E7-2F79-4C2D-8236-0BB39729EB21}|Liboqs_implementation\\Liboqs_implementation.csproj|c:\\users\\olesc\\desktop\\liboqs\\liboqs-kyber-.net-integration-and-benchmarking\\liboqs_implementation\\rsa_benchmarking.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{3C4AE2E7-2F79-4C2D-8236-0BB39729EB21}|Liboqs_implementation\\Liboqs_implementation.csproj|solutionrelative:liboqs_implementation\\rsa_benchmarking.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{3C4AE2E7-2F79-4C2D-8236-0BB39729EB21}|Liboqs_implementation\\Liboqs_implementation.csproj|c:\\users\\olesc\\desktop\\liboqs\\liboqs-kyber-.net-integration-and-benchmarking\\liboqs_implementation\\kyber_benchmarking.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3C4AE2E7-2F79-4C2D-8236-0BB39729EB21}|Liboqs_implementation\\Liboqs_implementation.csproj|solutionrelative:liboqs_implementation\\kyber_benchmarking.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{3C4AE2E7-2F79-4C2D-8236-0BB39729EB21}|Liboqs_implementation\\Liboqs_implementation.csproj|c:\\users\\olesc\\desktop\\liboqs\\liboqs-kyber-.net-integration-and-benchmarking\\liboqs_implementation\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{3C4AE2E7-2F79-4C2D-8236-0BB39729EB21}|Liboqs_implementation\\Liboqs_implementation.csproj|solutionrelative:liboqs_implementation\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{3C4AE2E7-2F79-4C2D-8236-0BB39729EB21}|Liboqs_implementation\\Liboqs_implementation.csproj|c:\\users\\olesc\\desktop\\liboqs\\liboqs-kyber-.net-integration-and-benchmarking\\liboqs_implementation\\kyberkem.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{3C4AE2E7-2F79-4C2D-8236-0BB39729EB21}|Liboqs_implementation\\Liboqs_implementation.csproj|solutionrelative:liboqs_implementation\\kyberkem.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{3C4AE2E7-2F79-4C2D-8236-0BB39729EB21}|Liboqs_implementation\\Liboqs_implementation.csproj|c:\\users\\olesc\\desktop\\liboqs\\liboqs-kyber-.net-integration-and-benchmarking\\liboqs_implementation\\kyber_benchmarking.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{3C4AE2E7-2F79-4C2D-8236-0BB39729EB21}|Liboqs_implementation\\Liboqs_implementation.csproj|solutionrelative:liboqs_implementation\\kyber_benchmarking.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{3C4AE2E7-2F79-4C2D-8236-0BB39729EB21}|Liboqs_implementation\\Liboqs_implementation.csproj|c:\\users\\olesc\\desktop\\liboqs\\liboqs-kyber-.net-integration-and-benchmarking\\liboqs_implementation\\rsa_benchmarking.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3C4AE2E7-2F79-4C2D-8236-0BB39729EB21}|Liboqs_implementation\\Liboqs_implementation.csproj|solutionrelative:liboqs_implementation\\rsa_benchmarking.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{3C4AE2E7-2F79-4C2D-8236-0BB39729EB21}|Liboqs_implementation\\Liboqs_implementation.csproj|c:\\users\\olesc\\desktop\\liboqs\\liboqs-kyber-.net-integration-and-benchmarking\\liboqs_implementation\\nativemethods.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{3C4AE2E7-2F79-4C2D-8236-0BB39729EB21}|Liboqs_implementation\\Liboqs_implementation.csproj|solutionrelative:liboqs_implementation\\nativemethods.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3C4AE2E7-2F79-4C2D-8236-0BB39729EB21}|Liboqs_implementation\\Liboqs_implementation.csproj|c:\\users\\olesc\\desktop\\liboqs\\liboqs-kyber-.net-integration-and-benchmarking\\liboqs_implementation\\kyberkem.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3C4AE2E7-2F79-4C2D-8236-0BB39729EB21}|Liboqs_implementation\\Liboqs_implementation.csproj|solutionrelative:liboqs_implementation\\kyberkem.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -30,7 +30,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 3,
+          "SelectedChildIndex": 4,
           "Children": [
             {
               "$type": "Bookmark",
@@ -42,37 +42,36 @@
             },
             {
               "$type": "Bookmark",
-              "Name": "ST:0:0:{d78612c7-9962-4b83-95d9-268046dad23a}"
+              "Name": "ST:0:0:{aa2115a1-9712-457b-9047-dbb71ca2cdd2}"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 2,
               "Title": "RSA_Benchmarking.cs",
               "DocumentMoniker": "C:\\Users\\olesc\\Desktop\\liboqs\\liboqs-Kyber-.NET-integration-and-benchmarking\\Liboqs_implementation\\RSA_Benchmarking.cs",
               "RelativeDocumentMoniker": "Liboqs_implementation\\RSA_Benchmarking.cs",
               "ToolTip": "C:\\Users\\olesc\\Desktop\\liboqs\\liboqs-Kyber-.NET-integration-and-benchmarking\\Liboqs_implementation\\RSA_Benchmarking.cs",
               "RelativeToolTip": "Liboqs_implementation\\RSA_Benchmarking.cs",
-              "ViewState": "AgIAABAAAAAAAAAAAAAgwB8AAAAwAAAAAAAAAA==",
+              "ViewState": "AgIAAA0AAAAAAAAAAAAowCIAAAAsAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-30T17:23:40.993Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-30T17:23:40.993Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 0,
               "Title": "Kyber_Benchmarking.cs",
               "DocumentMoniker": "C:\\Users\\olesc\\Desktop\\liboqs\\liboqs-Kyber-.NET-integration-and-benchmarking\\Liboqs_implementation\\Kyber_Benchmarking.cs",
               "RelativeDocumentMoniker": "Liboqs_implementation\\Kyber_Benchmarking.cs",
               "ToolTip": "C:\\Users\\olesc\\Desktop\\liboqs\\liboqs-Kyber-.NET-integration-and-benchmarking\\Liboqs_implementation\\Kyber_Benchmarking.cs",
               "RelativeToolTip": "Liboqs_implementation\\Kyber_Benchmarking.cs",
-              "ViewState": "AgIAADQAAAAAAAAAAAAgwEsAAAAuAAAAAAAAAA==",
+              "ViewState": "AgIAAGIAAAAAAAAAAAAIwHsAAAAgAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-06-03T10:08:03.063Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 3,
               "Title": "NativeMethods.cs",
               "DocumentMoniker": "C:\\Users\\olesc\\Desktop\\liboqs\\liboqs-Kyber-.NET-integration-and-benchmarking\\Liboqs_implementation\\NativeMethods.cs",
               "RelativeDocumentMoniker": "Liboqs_implementation\\NativeMethods.cs",
@@ -80,8 +79,7 @@
               "RelativeToolTip": "Liboqs_implementation\\NativeMethods.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-27T11:06:20.445Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-27T11:06:20.445Z"
             },
             {
               "$type": "Document",
@@ -91,23 +89,22 @@
               "RelativeDocumentMoniker": "Liboqs_implementation\\Program.cs",
               "ToolTip": "C:\\Users\\olesc\\Desktop\\liboqs\\liboqs-Kyber-.NET-integration-and-benchmarking\\Liboqs_implementation\\Program.cs",
               "RelativeToolTip": "Liboqs_implementation\\Program.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAhAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAAUAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-05-27T10:59:41.866Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 4,
               "Title": "KyberKEM.cs",
               "DocumentMoniker": "C:\\Users\\olesc\\Desktop\\liboqs\\liboqs-Kyber-.NET-integration-and-benchmarking\\Liboqs_implementation\\KyberKEM.cs",
               "RelativeDocumentMoniker": "Liboqs_implementation\\KyberKEM.cs",
               "ToolTip": "C:\\Users\\olesc\\Desktop\\liboqs\\liboqs-Kyber-.NET-integration-and-benchmarking\\Liboqs_implementation\\KyberKEM.cs",
               "RelativeToolTip": "Liboqs_implementation\\KyberKEM.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAADoAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAACUAAAAAAAAAAAAqwEMAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-27T10:58:34.299Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-27T10:58:34.299Z"
             }
           ]
         }

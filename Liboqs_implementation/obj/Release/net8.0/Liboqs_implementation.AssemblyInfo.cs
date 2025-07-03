@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Liboqs_implementation")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Release")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+60d9721594f4e41b2fbe2c124aea0886ecda6fe8")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+3fa38b3fb71f1302509cbad0e94f91be726baafe")]
 [assembly: System.Reflection.AssemblyProductAttribute("Liboqs_implementation")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Liboqs_implementation")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

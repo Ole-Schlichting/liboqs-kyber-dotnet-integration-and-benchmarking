@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace Liboqs_implementation {
     internal class Kyber_Benchmarking {
 
-        public void Run(string kyberAlgorithmName, int iterations = 1000) {
+        public void Run(string kyberAlgorithmName, int iterations = 10000) {
             Console.WriteLine("Kyber512 KEM C# Console Demo & Benchmark");
             Console.WriteLine("========================================");
 
@@ -68,23 +68,15 @@ namespace Liboqs_implementation {
 
 
                     Console.WriteLine($"Benchmarking {iterations} iterations for each operation...");
-                    List<byte[]> bytes = new List<byte[]>();
 
                     // 1. Benchmark Key Generation
                     for (int i = 0; i < iterations; i++) {
                         stopwatch.Restart(); // Resets and starts
                         kem.GenerateKeypair();
-                        //bytes.Add(t.PublicKey);
-                        //bytes.Add(t.SecretKey);
-                        //Console.WriteLine(ToHexString(t.PublicKey));
-                        //Console.WriteLine(ToHexString(t.SecretKey));
                         stopwatch.Stop();
                         keypairTimes.Add(stopwatch.ElapsedTicks);
                     }
 
-                    foreach (byte[] b in bytes) { 
-                        Console.WriteLine(ToHexString(b));
-                    }
 
                     PrintBenchmarkResults("Key Generation", keypairTimes);
 
@@ -128,8 +120,8 @@ namespace Liboqs_implementation {
                 Console.ResetColor();
             }
 
-            Console.WriteLine("\nBenchmarking complete. Press any key to exit.");
-            Console.ReadKey();
+            //Console.WriteLine("\nBenchmarking complete. Press any key to exit.");
+            //Console.ReadKey();
         }
         static void PrintBenchmarkResults(string operationName, List<long> elapsedTicks) {
             if (elapsedTicks == null || !elapsedTicks.Any()) {

@@ -59,7 +59,6 @@ public class KyberKEM : IDisposable {
 
         byte[] ciphertext = new byte[CiphertextLength];
         byte[] sharedSecret = new byte[SharedSecretLength];
-
         NativeMethods.OqsStatus status = NativeMethods.OQS_KEM_encaps(_kemPtr, ciphertext, sharedSecret, publicKey);
         if (status != NativeMethods.OqsStatus.Success) {
             throw new Exception($"OQS_KEM_encaps failed for {AlgorithmName} with status: {status}");
@@ -102,5 +101,14 @@ public class KyberKEM : IDisposable {
 
     ~KyberKEM() {
         Dispose(false);
+    }
+    static string ToHexString(byte[] bytes) {
+        if (bytes == null) return "null";
+
+        // Ab .NET 5.0 ist dies der einfachste Weg:
+        return Convert.ToHexString(bytes);
+
+        // Für ältere .NET-Frameworks oder als Alternative:
+        // return string.Join("", bytes.Select(b => b.ToString("X2")));
     }
 }

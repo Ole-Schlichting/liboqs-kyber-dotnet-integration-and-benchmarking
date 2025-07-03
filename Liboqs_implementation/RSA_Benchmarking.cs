@@ -16,7 +16,7 @@ namespace Liboqs_implementation {
             var keyGenTimes = new List<double>(numIterations);
             var encryptTimes = new List<double>(numIterations);
             var decryptTimes = new List<double>(numIterations);
-
+            
             var stopwatch = new Stopwatch();
 
             // Temporäre Variablen für die Ergebnisse, um sie in der Schleife zu verwenden
@@ -33,6 +33,8 @@ namespace Liboqs_implementation {
 
             var rsa1 = RSA.Create(keySizeInBits);
             _ = rsa1.ExportParameters(true);
+
+
             // --- 1. Schlüsselgenerierung ---
             for (int i = 0; i < numIterations; i++) {
                 stopwatch.Restart();
