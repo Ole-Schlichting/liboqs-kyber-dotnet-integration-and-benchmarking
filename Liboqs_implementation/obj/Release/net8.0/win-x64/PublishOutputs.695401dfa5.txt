@@ -1,0 +1,2 @@
+C:\Users\olesc\Desktop\liboqs\liboqs-Kyber-.NET-integration-and-benchmarking\Liboqs_implementation\bin\Release\net8.0\win-x64\publish\Liboqs_implementation.pdb
+C:\Users\olesc\Desktop\liboqs\liboqs-Kyber-.NET-integration-and-benchmarking\Liboqs_implementation\bin\Release\net8.0\win-x64\publish\Liboqs_implementation.exe

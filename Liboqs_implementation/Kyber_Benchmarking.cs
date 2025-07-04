@@ -9,8 +9,8 @@ namespace Liboqs_implementation {
     internal class Kyber_Benchmarking {
 
         public void Run(string kyberAlgorithmName, int iterations = 10000) {
-            Console.WriteLine("Kyber512 KEM C# Console Demo & Benchmark");
-            Console.WriteLine("========================================");
+            Console.WriteLine($"Kyber {kyberAlgorithmName} KEM C# Console Demo & Benchmark");
+            Console.WriteLine("==================================================");
 
             // --- Basic KEM Flow (for verification and warm-up) ---
             Console.WriteLine("\n--- Performing initial KEM flow for verification and JIT warm-up ---");
@@ -48,56 +48,69 @@ namespace Liboqs_implementation {
             Console.WriteLine("\n--- Starting Benchmarks ---");
 
             try {
-                // Re-initialize KEM for a clean benchmark slate if desired,
-                // though the class itself is lightweight. The expensive parts are the OQS calls.
                 using (var kem = new KyberKEM(kyberAlgorithmName)) {
                     Stopwatch stopwatch = new Stopwatch();
                     List<long> keypairTimes = new List<long>(iterations);
                     List<long> encapsTimes = new List<long>(iterations);
                     List<long> decapsTimes = new List<long>(iterations);
 
-                    // Pre-allocate some keys for encaps/decaps benchmarks to avoid measuring keygen there
-                    byte[] PkForBench = new byte[kem.PublicKeyLength];
-                    byte[] SkForBench = new byte[kem.SecretKeyLength];
-                    byte[] CtForBench = new byte[kem.CiphertextLength];
-
-                    // Generate one key pair to be used for encaps/decaps benchmarks
-                    (PkForBench, SkForBench) = kem.GenerateKeypair();
-                    // Encapsulate once to have a ciphertext for decapsulation benchmark
-                    (CtForBench, _) = kem.Encapsulate(PkForBench);
+                    // *** NEW: Lists to store the generated data ***
+                    // We store all key pairs and ciphertexts to ensure a more realistic benchmark.
+                    // Note: This increases memory consumption. For 10,000 Kyber512 iterations, this will use roughly 32 MB of RAM.
+                    Console.WriteLine($"Preparing memory for {iterations} iterations...");
+                    List<byte[]> publicKeys = new List<byte[]>(iterations);
+                    List<byte[]> secretKeys = new List<byte[]>(iterations);
+                    List<byte[]> ciphertexts = new List<byte[]>(iterations);
 
 
                     Console.WriteLine($"Benchmarking {iterations} iterations for each operation...");
 
                     // 1. Benchmark Key Generation
+                    //    Generates 'iterations' key pairs and stores them.
+                    Console.WriteLine("\n[1/3] Benchmarking Key Generation...");
                     for (int i = 0; i < iterations; i++) {
-                        stopwatch.Restart(); // Resets and starts
-                        kem.GenerateKeypair();
+                        stopwatch.Restart();
+                        var (pk, sk) = kem.GenerateKeypair();
                         stopwatch.Stop();
+
                         keypairTimes.Add(stopwatch.ElapsedTicks);
+                        publicKeys.Add(pk);
+                        secretKeys.Add(sk);
                     }
-
-
                     PrintBenchmarkResults("Key Generation", keypairTimes);
 
 
                     // 2. Benchmark Encapsulation
-                    // Using the pre-generated PkForBench
+                    //    Uses a different, previously generated public key for each iteration.
+                    //    Stores the resulting ciphertext.
+                    Console.WriteLine("\n[2/3] Benchmarking Encapsulation (using the previously generated keys)...");
                     for (int i = 0; i < iterations; i++) {
+                        // Get the public key for this iteration
+                        byte[] currentPk = publicKeys[i];
+
                         stopwatch.Restart();
-                        kem.Encapsulate(PkForBench);
+                        // We don't need the shared secret (ss) here, but the method returns it.
+                        var (ct, ss) = kem.Encapsulate(currentPk);
                         stopwatch.Stop();
+
                         encapsTimes.Add(stopwatch.ElapsedTicks);
+                        ciphertexts.Add(ct);
                     }
                     PrintBenchmarkResults("Encapsulation", encapsTimes);
 
 
                     // 3. Benchmark Decapsulation
-                    // Using the pre-generated CtForBench and SkForBench
+                    //    For each iteration, uses the corresponding ciphertext and its associated secret key.
+                    Console.WriteLine("\n[3/3] Benchmarking Decapsulation (using the previously generated ciphertexts)...");
                     for (int i = 0; i < iterations; i++) {
+                        // Get the ciphertext and the corresponding secret key for this iteration
+                        byte[] currentCt = ciphertexts[i];
+                        byte[] currentSk = secretKeys[i];
+
                         stopwatch.Restart();
-                        kem.Decapsulate(CtForBench, SkForBench);
+                        kem.Decapsulate(currentCt, currentSk);
                         stopwatch.Stop();
+
                         decapsTimes.Add(stopwatch.ElapsedTicks);
                     }
                     PrintBenchmarkResults("Decapsulation", decapsTimes);
@@ -119,10 +132,8 @@ namespace Liboqs_implementation {
                 Console.WriteLine(ex.StackTrace);
                 Console.ResetColor();
             }
-
-            //Console.WriteLine("\nBenchmarking complete. Press any key to exit.");
-            //Console.ReadKey();
         }
+
         static void PrintBenchmarkResults(string operationName, List<long> elapsedTicks) {
             if (elapsedTicks == null || !elapsedTicks.Any()) {
                 Console.WriteLine($"No data for {operationName}.");
@@ -145,22 +156,16 @@ namespace Liboqs_implementation {
             double medianMs = ((double)medianTicks / Stopwatch.Frequency) * 1000.0;
 
 
-            Console.WriteLine($"\nResults for {operationName} ({elapsedTicks.Count} iterations):");
+            Console.WriteLine($"Results for {operationName} ({elapsedTicks.Count} iterations):");
             Console.WriteLine($"  Average: {averageMs:F4} ms ({averageTicks:F0} ticks)");
             Console.WriteLine($"  Min:     {minMs:F4} ms ({minTicks} ticks)");
             Console.WriteLine($"  Max:     {maxMs:F4} ms ({maxTicks} ticks)");
             Console.WriteLine($"  Median:  {medianMs:F4} ms ({medianTicks} ticks)");
-            // Optionally, calculate standard deviation for more insight into variability
         }
 
         static string ToHexString(byte[] bytes) {
             if (bytes == null) return "null";
-
-            // Ab .NET 5.0 ist dies der einfachste Weg:
             return Convert.ToHexString(bytes);
-
-            // Für ältere .NET-Frameworks oder als Alternative:
-            // return string.Join("", bytes.Select(b => b.ToString("X2")));
         }
     }
 }
