@@ -1,11 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "DvEYP9WVZ3s=",
+  "dgSpecHash": "T4Lh5TMi/JU=",
   "success": true,
   "projectFilePath": "C:\\Users\\olesc\\Desktop\\liboqs\\liboqs-Kyber-.NET-integration-and-benchmarking\\Liboqs_implementation\\Liboqs_implementation.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\olesc\\.nuget\\packages\\benchmarkdotnet\\0.15.2\\benchmarkdotnet.0.15.2.nupkg.sha512",
     "C:\\Users\\olesc\\.nuget\\packages\\benchmarkdotnet.annotations\\0.15.2\\benchmarkdotnet.annotations.0.15.2.nupkg.sha512",
+    "C:\\Users\\olesc\\.nuget\\packages\\benchmarkdotnet.diagnostics.windows\\0.15.2\\benchmarkdotnet.diagnostics.windows.0.15.2.nupkg.sha512",
     "C:\\Users\\olesc\\.nuget\\packages\\commandlineparser\\2.9.1\\commandlineparser.2.9.1.nupkg.sha512",
     "C:\\Users\\olesc\\.nuget\\packages\\gee.external.capstone\\2.3.0\\gee.external.capstone.2.3.0.nupkg.sha512",
     "C:\\Users\\olesc\\.nuget\\packages\\iced\\1.21.0\\iced.1.21.0.nupkg.sha512",

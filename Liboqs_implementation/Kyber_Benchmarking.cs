@@ -1,171 +1,77 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
+﻿// Fügen Sie die using-Direktiven für BenchmarkDotNet hinzu
+using BenchmarkDotNet.Attributes;
+using BenchmarkDotNet.Diagnosers;
+using BenchmarkDotNet.Jobs;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Security.Cryptography; // Nur als Beispiel, falls Sie auch RSA benchen
 
 namespace Liboqs_implementation {
-    internal class Kyber_Benchmarking {
+    // 1. Klasse 'public' machen und mit Attributen versehen
+    [MemoryDiagnoser] // Misst Speicher und GC-Läufe - ESSENTIELL!
+    [RankColumn]      // Zeigt einen Rang an
+    [GroupBenchmarksBy(BenchmarkDotNet.Configs.BenchmarkLogicalGroupRule.ByParams)] // Gruppiert Ergebnisse nach Algorithmus
+    [SimpleJob(RuntimeMoniker.Net80, iterationCount: 100)]
+    [HardwareCounters(HardwareCounter.TotalCycles)]
+    public class Kyber_Benchmarking // Früher: internal class
+    {
+        
+        // 2. Die Algorithmus-Namen werden zu Parametern
+        // BenchmarkDotNet wird für jeden dieser Werte einen kompletten Satz von Benchmarks ausführen.
+        [Params("Kyber512", "Kyber768", "Kyber1024")]
+        public string AlgorithmName { get; set; }
 
-        public void Run(string kyberAlgorithmName, int iterations = 10000) {
-            Console.WriteLine($"Kyber {kyberAlgorithmName} KEM C# Console Demo & Benchmark");
-            Console.WriteLine("==================================================");
+        // 3. Felder für den Zustand, den wir zwischen den Operationen benötigen
+        private KyberKEM _kem;
+        private byte[] _publicKey;
+        private byte[] _secretKey;
+        private byte[] _ciphertext;
 
-            // --- Basic KEM Flow (for verification and warm-up) ---
-            Console.WriteLine("\n--- Performing initial KEM flow for verification and JIT warm-up ---");
-            try {
-                using (var kem = new KyberKEM(kyberAlgorithmName)) {
-                    Console.WriteLine($"Using KEM: {kem.AlgorithmName}");
-                    Console.WriteLine($"  PK: {kem.PublicKeyLength} B, SK: {kem.SecretKeyLength} B, CT: {kem.CiphertextLength} B, SS: {kem.SharedSecretLength} B");
-
-                    var (pk, sk) = kem.GenerateKeypair();
-                    var (ct, ss_bob) = kem.Encapsulate(pk);
-                    var ss_alice = kem.Decapsulate(ct, sk);
-
-                    if (ss_alice.SequenceEqual(ss_bob)) {
-                        Console.WriteLine("Initial KEM flow successful: Shared secrets match.\n");
-                    } else {
-                        Console.ForegroundColor = ConsoleColor.Red;
-                        Console.WriteLine("Initial KEM flow FAILED: Shared secrets DO NOT match.\n");
-                        Console.ResetColor();
-                        // Potentially exit if basic functionality fails
-                        // return;
-                    }
-                }
-            } catch (Exception ex) {
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine($"Error during initial KEM flow: {ex.Message}");
-                Console.ResetColor();
-                Console.WriteLine("\nBenchmarking cannot proceed if the basic flow fails.");
-                Console.WriteLine("Press any key to exit.");
-                Console.ReadKey();
-                return;
-            }
-
-
-            // --- Benchmarking ---
-            Console.WriteLine("\n--- Starting Benchmarks ---");
-
-            try {
-                using (var kem = new KyberKEM(kyberAlgorithmName)) {
-                    Stopwatch stopwatch = new Stopwatch();
-                    List<long> keypairTimes = new List<long>(iterations);
-                    List<long> encapsTimes = new List<long>(iterations);
-                    List<long> decapsTimes = new List<long>(iterations);
-
-                    // *** NEW: Lists to store the generated data ***
-                    // We store all key pairs and ciphertexts to ensure a more realistic benchmark.
-                    // Note: This increases memory consumption. For 10,000 Kyber512 iterations, this will use roughly 32 MB of RAM.
-                    Console.WriteLine($"Preparing memory for {iterations} iterations...");
-                    List<byte[]> publicKeys = new List<byte[]>(iterations);
-                    List<byte[]> secretKeys = new List<byte[]>(iterations);
-                    List<byte[]> ciphertexts = new List<byte[]>(iterations);
-
-
-                    Console.WriteLine($"Benchmarking {iterations} iterations for each operation...");
-
-                    // 1. Benchmark Key Generation
-                    //    Generates 'iterations' key pairs and stores them.
-                    Console.WriteLine("\n[1/3] Benchmarking Key Generation...");
-                    for (int i = 0; i < iterations; i++) {
-                        stopwatch.Restart();
-                        var (pk, sk) = kem.GenerateKeypair();
-                        stopwatch.Stop();
-
-                        keypairTimes.Add(stopwatch.ElapsedTicks);
-                        publicKeys.Add(pk);
-                        secretKeys.Add(sk);
-                    }
-                    PrintBenchmarkResults("Key Generation", keypairTimes);
-
-
-                    // 2. Benchmark Encapsulation
-                    //    Uses a different, previously generated public key for each iteration.
-                    //    Stores the resulting ciphertext.
-                    Console.WriteLine("\n[2/3] Benchmarking Encapsulation (using the previously generated keys)...");
-                    for (int i = 0; i < iterations; i++) {
-                        // Get the public key for this iteration
-                        byte[] currentPk = publicKeys[i];
-
-                        stopwatch.Restart();
-                        // We don't need the shared secret (ss) here, but the method returns it.
-                        var (ct, ss) = kem.Encapsulate(currentPk);
-                        stopwatch.Stop();
-
-                        encapsTimes.Add(stopwatch.ElapsedTicks);
-                        ciphertexts.Add(ct);
-                    }
-                    PrintBenchmarkResults("Encapsulation", encapsTimes);
-
-
-                    // 3. Benchmark Decapsulation
-                    //    For each iteration, uses the corresponding ciphertext and its associated secret key.
-                    Console.WriteLine("\n[3/3] Benchmarking Decapsulation (using the previously generated ciphertexts)...");
-                    for (int i = 0; i < iterations; i++) {
-                        // Get the ciphertext and the corresponding secret key for this iteration
-                        byte[] currentCt = ciphertexts[i];
-                        byte[] currentSk = secretKeys[i];
-
-                        stopwatch.Restart();
-                        kem.Decapsulate(currentCt, currentSk);
-                        stopwatch.Stop();
-
-                        decapsTimes.Add(stopwatch.ElapsedTicks);
-                    }
-                    PrintBenchmarkResults("Decapsulation", decapsTimes);
-                }
-            } catch (DllNotFoundException) {
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine($"FATAL: oqs.dll not found. Ensure oqs.dll is in the output directory ({System.IO.Directory.GetCurrentDirectory()}) and matches the application's architecture.");
-                Console.ResetColor();
-            } catch (ArgumentException ex) {
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine($"ARGUMENT ERROR: {ex.Message}");
-                if (ex.Message.Contains("Algorithm not supported")) {
-                    Console.WriteLine($"Please ensure the algorithm name '{kyberAlgorithmName}' is correct and supported by your liboqs build.");
-                }
-                Console.ResetColor();
-            } catch (Exception ex) {
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine($"AN ERROR OCCURRED DURING BENCHMARKING: {ex.Message}");
-                Console.WriteLine(ex.StackTrace);
-                Console.ResetColor();
-            }
+        // 4. [GlobalSetup] wird einmal pro Parameter (pro Algorithmus) ausgeführt.
+        //    Es ersetzt den Code am Anfang Ihrer alten 'Run'-Methode.
+        [GlobalSetup]
+        public void GlobalSetup() {
+            // Erstellt die KEM-Instanz für den aktuellen Algorithmus
+            _kem = new KyberKEM(AlgorithmName);
+            Console.WriteLine("TEST");
+            // Wir generieren einmalig Daten, die für die Setups benötigt werden.
+            // Dies stellt sicher, dass die Operationen selbst nicht durch
+            // unvorhersehbare Zustände beeinflusst werden.
+            (_publicKey, _secretKey) = _kem.GenerateKeypair();
+            (_ciphertext, _) = _kem.Encapsulate(_publicKey);
         }
 
-        static void PrintBenchmarkResults(string operationName, List<long> elapsedTicks) {
-            if (elapsedTicks == null || !elapsedTicks.Any()) {
-                Console.WriteLine($"No data for {operationName}.");
-                return;
-            }
-
-            // Calculate statistics
-            double averageTicks = elapsedTicks.Average();
-            long minTicks = elapsedTicks.Min();
-            long maxTicks = elapsedTicks.Max();
-
-            // Convert ticks to milliseconds (Stopwatch.Frequency is ticks per second)
-            double averageMs = (averageTicks / Stopwatch.Frequency) * 1000.0;
-            double minMs = ((double)minTicks / Stopwatch.Frequency) * 1000.0;
-            double maxMs = ((double)maxTicks / Stopwatch.Frequency) * 1000.0;
-
-            // Median
-            var sortedTicks = elapsedTicks.OrderBy(t => t).ToList();
-            long medianTicks = sortedTicks[sortedTicks.Count / 2];
-            double medianMs = ((double)medianTicks / Stopwatch.Frequency) * 1000.0;
-
-
-            Console.WriteLine($"Results for {operationName} ({elapsedTicks.Count} iterations):");
-            Console.WriteLine($"  Average: {averageMs:F4} ms ({averageTicks:F0} ticks)");
-            Console.WriteLine($"  Min:     {minMs:F4} ms ({minTicks} ticks)");
-            Console.WriteLine($"  Max:     {maxMs:F4} ms ({maxTicks} ticks)");
-            Console.WriteLine($"  Median:  {medianMs:F4} ms ({medianTicks} ticks)");
+        // 5. [IterationSetup] wird VOR JEDER EINZELNEN Messung ausgeführt.
+        //    Es dient dazu, die Eingabedaten für den Benchmark vorzubereiten.
+        //    Die Zeit, die hier verbracht wird, wird NICHT gemessen.
+        [IterationSetup]
+        public void IterationSetup() {
+            // Für Encapsulation und Decapsulation benötigen wir frische Schlüssel/Ciphertexte,
+            // um Cache-Effekte der CPU zu vermeiden, die das Ergebnis verfälschen könnten.
+            (_publicKey, _secretKey) = _kem.GenerateKeypair();
+            (_ciphertext, _) = _kem.Encapsulate(_publicKey);
         }
 
-        static string ToHexString(byte[] bytes) {
-            if (bytes == null) return "null";
-            return Convert.ToHexString(bytes);
+        // 6. Jede zu messende Operation wird eine eigene [Benchmark]-Methode.
+        //    Die Methode sollte nur die EINE Operation enthalten, die gemessen werden soll.
+
+        [Benchmark(Description = "KeyGen")]
+        public (byte[], byte[]) KeyGeneration() {
+            // Misst nur die reine Schlüsselgenerierung.
+            return _kem.GenerateKeypair();
+        }
+
+        [Benchmark(Description = "Encaps")]
+        public (byte[], byte[]) Encapsulation() {
+            // Misst nur die Kapselung.
+            // Der _publicKey wurde im [IterationSetup] vorbereitet.
+            return _kem.Encapsulate(_publicKey);
+        }
+
+        [Benchmark(Description = "Decaps")]
+        public byte[] Decapsulation() {
+            // Misst nur die Entkapselung.
+            // _ciphertext und _secretKey wurden im [IterationSetup] vorbereitet.
+            return _kem.Decapsulate(_ciphertext, _secretKey);
         }
     }
 }

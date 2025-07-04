@@ -78,3 +78,5 @@ C:\Users\olesc\Desktop\liboqs\liboqs-Kyber-.NET-integration-and-benchmarking\Lib
 C:\Users\olesc\Desktop\liboqs\liboqs-Kyber-.NET-integration-and-benchmarking\Liboqs_implementation\bin\Release\net8.0\runtimes\win\lib\net8.0\System.Management.dll
 C:\Users\olesc\Desktop\liboqs\liboqs-Kyber-.NET-integration-and-benchmarking\Liboqs_implementation\obj\Release\net8.0\Liboqs_implementation.csproj.AssemblyReference.cache
 C:\Users\olesc\Desktop\liboqs\liboqs-Kyber-.NET-integration-and-benchmarking\Liboqs_implementation\obj\Release\net8.0\Liboqs_i.2849D395.Up2Date
+C:\Users\olesc\Desktop\liboqs\liboqs-Kyber-.NET-integration-and-benchmarking\Liboqs_implementation\bin\Release\net8.0\oqs.dll
+C:\Users\olesc\Desktop\liboqs\liboqs-Kyber-.NET-integration-and-benchmarking\Liboqs_implementation\bin\Release\net8.0\BenchmarkDotNet.Diagnostics.Windows.dll

@@ -8,7 +8,8 @@
     ".NETCoreApp,Version=v8.0": {
       "Liboqs_implementation/1.0.0": {
         "dependencies": {
-          "BenchmarkDotNet": "0.15.2"
+          "BenchmarkDotNet": "0.15.2",
+          "BenchmarkDotNet.Diagnostics.Windows": "0.15.2"
         },
         "runtime": {
           "Liboqs_implementation.dll": {}
@@ -37,6 +38,18 @@
       "BenchmarkDotNet.Annotations/0.15.2": {
         "runtime": {
           "lib/netstandard2.0/BenchmarkDotNet.Annotations.dll": {
+            "assemblyVersion": "0.15.2.0",
+            "fileVersion": "0.15.2.0"
+          }
+        }
+      },
+      "BenchmarkDotNet.Diagnostics.Windows/0.15.2": {
+        "dependencies": {
+          "BenchmarkDotNet": "0.15.2",
+          "Microsoft.Diagnostics.Tracing.TraceEvent": "3.1.21"
+        },
+        "runtime": {
+          "lib/netstandard2.0/BenchmarkDotNet.Diagnostics.Windows.dll": {
             "assemblyVersion": "0.15.2.0",
             "fileVersion": "0.15.2.0"
           }
@@ -445,6 +458,13 @@
       "sha512": "sha512-a7rVlVmXQRrp3J+HF/FtjwiFcshU6BAuv6U1xtAbqCUYepOEnNGaPeOFvy4It17QZwwofm6U/GAfW3JrFMXszg==",
       "path": "benchmarkdotnet.annotations/0.15.2",
       "hashPath": "benchmarkdotnet.annotations.0.15.2.nupkg.sha512"
+    },
+    "BenchmarkDotNet.Diagnostics.Windows/0.15.2": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-7z5ArwhMITcB32IlHO1XVEaoakUoW/MCe/N+3XQyIYqsrAZSVGrBQWRBedjOAU8lGe9Mu1gALVEDy5ngFlHcnQ==",
+      "path": "benchmarkdotnet.diagnostics.windows/0.15.2",
+      "hashPath": "benchmarkdotnet.diagnostics.windows.0.15.2.nupkg.sha512"
     },
     "CommandLineParser/2.9.1": {
       "type": "package",

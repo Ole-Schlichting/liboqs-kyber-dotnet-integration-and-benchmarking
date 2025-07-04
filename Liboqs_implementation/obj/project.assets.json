@@ -40,6 +40,23 @@
           }
         }
       },
+      "BenchmarkDotNet.Diagnostics.Windows/0.15.2": {
+        "type": "package",
+        "dependencies": {
+          "BenchmarkDotNet": "0.15.2",
+          "Microsoft.Diagnostics.Tracing.TraceEvent": "3.1.21"
+        },
+        "compile": {
+          "lib/netstandard2.0/BenchmarkDotNet.Diagnostics.Windows.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/netstandard2.0/BenchmarkDotNet.Diagnostics.Windows.dll": {
+            "related": ".xml"
+          }
+        }
+      },
       "CommandLineParser/2.9.1": {
         "type": "package",
         "compile": {
@@ -686,6 +703,20 @@
         "benchmarkdotnet.annotations.nuspec",
         "lib/netstandard2.0/BenchmarkDotNet.Annotations.dll",
         "lib/netstandard2.0/BenchmarkDotNet.Annotations.xml",
+        "package-icon.png"
+      ]
+    },
+    "BenchmarkDotNet.Diagnostics.Windows/0.15.2": {
+      "sha512": "7z5ArwhMITcB32IlHO1XVEaoakUoW/MCe/N+3XQyIYqsrAZSVGrBQWRBedjOAU8lGe9Mu1gALVEDy5ngFlHcnQ==",
+      "type": "package",
+      "path": "benchmarkdotnet.diagnostics.windows/0.15.2",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "benchmarkdotnet.diagnostics.windows.0.15.2.nupkg.sha512",
+        "benchmarkdotnet.diagnostics.windows.nuspec",
+        "lib/netstandard2.0/BenchmarkDotNet.Diagnostics.Windows.dll",
+        "lib/netstandard2.0/BenchmarkDotNet.Diagnostics.Windows.xml",
         "package-icon.png"
       ]
     },
@@ -2323,7 +2354,8 @@
   },
   "projectFileDependencyGroups": {
     "net8.0": [
-      "BenchmarkDotNet >= 0.15.2"
+      "BenchmarkDotNet >= 0.15.2",
+      "BenchmarkDotNet.Diagnostics.Windows >= 0.15.2"
     ]
   },
   "packageFolders": {
@@ -2378,6 +2410,10 @@
         "targetAlias": "net8.0",
         "dependencies": {
           "BenchmarkDotNet": {
+            "target": "Package",
+            "version": "[0.15.2, )"
+          },
+          "BenchmarkDotNet.Diagnostics.Windows": {
             "target": "Package",
             "version": "[0.15.2, )"
           }
