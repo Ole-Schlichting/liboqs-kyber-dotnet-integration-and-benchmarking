@@ -17,18 +17,33 @@ public class Program {
     */
     public static void Main(string[] args) {
         Console.WriteLine("Starting Kyber benchmarks...");
+        Kyber_Verification kyber_Verification = new Kyber_Verification();
+        kyber_Verification.Verification("Kyber512");
+        kyber_Verification.Verification("Kyber768");
+        kyber_Verification.Verification("Kyber1024");
 
-        // Erstellen einer benutzerdefinierten Konfiguration
-        var config = ManualConfig.CreateEmpty() // Starten mit einer LEEREN Konfiguration
-            .AddJob(Job.Default.WithId("DefaultJob")) // Fügen Sie einen Job hinzu, sonst läuft nichts
-            .AddDiagnoser(MemoryDiagnoser.Default)   // Fügen Sie den MemoryDiagnoser hinzu
-            .AddColumnProvider(DefaultColumnProviders.Instance) // Fügen Sie Standardspalten hinzu (Mean, StdDev, etc.)
-            .AddLogger(new ConsoleLogger()) // Fügen Sie den Logger hinzu, der die finale Tabelle schreibt
-            .AddExporter(MarkdownExporter.GitHub) // Optional: Schreibt die Tabelle auch in eine .md-Datei
-            .AddJob(Job.Default.WithToolchain(
-                BenchmarkDotNet.Toolchains.InProcess.NoEmit.InProcessNoEmitToolchain.Instance));
-        // Führen Sie den Benchmark mit dieser sauberen Konfiguration aus
+        // Benchmark Configuration
+        var config = ManualConfig.CreateEmpty()
+            .AddJob(Job.Default.
+                WithWarmupCount(10).
+                WithIterationCount(50))
+            .AddDiagnoser(MemoryDiagnoser.Default)
+            .AddColumnProvider(DefaultColumnProviders.Instance)
+            .AddLogger(new ConsoleLogger())
+            .AddExporter(MarkdownExporter.GitHub)
+            .AddColumn(StatisticColumn.Min)
+            .AddColumn(StatisticColumn.Max)
+            .AddColumn(StatisticColumn.Error)
+            .AddColumn(StatisticColumn.OperationsPerSecond);
+
+
         BenchmarkRunner.Run<Kyber_Benchmarking>(config);
+
+        /*
+                     .AddJob(Job.Default.WithToolchain(
+                BenchmarkDotNet.Toolchains.InProcess.NoEmit.InProcessNoEmitToolchain.Instance));
+         
+         */
     }
 }
 
