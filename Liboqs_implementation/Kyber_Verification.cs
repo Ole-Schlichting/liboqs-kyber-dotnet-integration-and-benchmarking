@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -40,5 +42,21 @@ namespace Liboqs_implementation {
             }
         }
 
+        private KyberKEM _kem;
+        private byte[] _publicKey;
+        private byte[] _secretKey;
+        private byte[] _ciphertext;
+        public void Sizes() {
+            string[] kybers = ["Kyber512", "Kyber768", "Kyber1024"];
+            foreach(string s in kybers) {
+                _kem = new KyberKEM(s);
+                (_publicKey, _secretKey) = _kem.GenerateKeypair();
+                (_ciphertext, _) = _kem.Encapsulate(_publicKey);
+                Console.WriteLine(s);
+                Console.WriteLine("Public Key Length: " + _publicKey.Length + " Bytes");
+                Console.WriteLine("Secret Key Length: " + _secretKey.Length + " Bytes");
+                Console.WriteLine("Ciphertext Length: " + _ciphertext.Length + " Bytes");
+            }
+        }
     }
 }

@@ -6,8 +6,7 @@ using BenchmarkDotNet.Jobs;
 using BenchmarkDotNet.Loggers; // Wichtig für ILogger
 using BenchmarkDotNet.Running;
 using Liboqs_implementation;
-using System;
-using static System.Net.Mime.MediaTypeNames;
+using System.Linq.Expressions;
 
 public class Program {
 
@@ -16,12 +15,6 @@ public class Program {
     cmake --build . --config Release
     */
     public static void Main(string[] args) {
-        Console.WriteLine("Starting Kyber benchmarks...");
-        Kyber_Verification kyber_Verification = new Kyber_Verification();
-        kyber_Verification.Verification("Kyber512");
-        kyber_Verification.Verification("Kyber768");
-        kyber_Verification.Verification("Kyber1024");
-
         // Benchmark Configuration
         var config = ManualConfig.CreateEmpty()
             .AddJob(Job.Default.
@@ -37,16 +30,51 @@ public class Program {
             .AddColumn(StatisticColumn.OperationsPerSecond);
 
 
-        BenchmarkRunner.Run<Kyber_Benchmarking>(config);
-        BenchmarkRunner.Run<RSA_Benchmarking>(config);
-        /*
-                     .AddJob(Job.Default.WithToolchain(
-                BenchmarkDotNet.Toolchains.InProcess.NoEmit.InProcessNoEmitToolchain.Instance));
-         
-         */
+            if (args.Length < 2 || args[0].ToLower() != "benchmark" && args[0].ToLower() != "sizes") {
+                Console.WriteLine("Nutzung:");
+                Console.WriteLine("Liboqs_implementation.exe benchmark rsa");
+                Console.WriteLine("Liboqs_implementation.exe benchmark kyber");
+                return;
+            }
+            Kyber_Verification kyber_Verification = new Kyber_Verification();
 
-        Console.WriteLine("Press any key to exit...");
-        Console.ReadKey();
+
+            if (args[0].ToLower() == "sizes") {
+                switch (args[1]) {
+                    case "kyber":
+                        kyber_Verification.Sizes();
+                        break;
+                    case "rsa":
+                        RSA_Verification.Sizes();
+                        break;
+                    default:
+                        Console.WriteLine("Unbekannter Benchmark: " + args[1]);
+                        break;
+                }
+            }
+
+            if(args[0].ToLower() == "benchmark") {
+                switch (args[1].ToLower()) {
+                    case "rsa":
+                        RSA_Verification.RunValidation(2048);
+                        RSA_Verification.RunValidation(4096);
+                        BenchmarkRunner.Run<RSA_Benchmarking>(config);
+                        break;
+                    case "kyber":
+                        kyber_Verification.Verification("Kyber512");
+                        kyber_Verification.Verification("Kyber768");
+                        kyber_Verification.Verification("Kyber1024");
+                        BenchmarkRunner.Run<Kyber_Benchmarking>(config);
+                        break;
+
+                    default:
+                        Console.WriteLine("Unbekannter Benchmark: " + args[1]);
+                        break;
+                }
+            }
+            
+
+
     }
 }
 

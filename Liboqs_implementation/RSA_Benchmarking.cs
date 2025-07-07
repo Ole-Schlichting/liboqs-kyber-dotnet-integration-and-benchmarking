@@ -3,19 +3,15 @@ using BenchmarkDotNet.Jobs;
 using System.Security.Cryptography;
 
 namespace Liboqs_implementation {
-    // Configuration attributes for BenchmarkDotNet
-    [MemoryDiagnoser] // Measures memory allocation and GC collections
-    [MarkdownExporter, RPlotExporter] // Generates nice output formats
+    [MemoryDiagnoser]
+    [MarkdownExporter, RPlotExporter]
     public class RSA_Benchmarking {
-        // Parameterizes the benchmark to run for different key sizes
         [Params(2048, 4096)]
         public int KeySizeInBits { get; set; }
 
         private readonly byte[] _plaintext;
         private readonly RSAEncryptionPadding _padding;
 
-        // A single RSA instance and corresponding ciphertext for Encrypt/Decrypt benchmarks.
-        // These are set up once in GlobalSetup.
         private RSA _rsa;
         private byte[] _ciphertext;
 

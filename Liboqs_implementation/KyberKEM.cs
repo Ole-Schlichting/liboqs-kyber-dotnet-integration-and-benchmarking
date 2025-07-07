@@ -56,7 +56,6 @@ public class KyberKEM : IDisposable {
         if (publicKey == null || publicKey.Length != PublicKeyLength) {
             throw new ArgumentException($"Public key length is invalid. Expected {PublicKeyLength}, got {publicKey?.Length ?? 0}.", nameof(publicKey));
         }
-
         byte[] ciphertext = new byte[CiphertextLength];
         byte[] sharedSecret = new byte[SharedSecretLength];
         NativeMethods.OqsStatus status = NativeMethods.OQS_KEM_encaps(_kemPtr, ciphertext, sharedSecret, publicKey);
