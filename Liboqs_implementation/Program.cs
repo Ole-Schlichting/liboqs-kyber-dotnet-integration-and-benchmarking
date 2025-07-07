@@ -38,12 +38,15 @@ public class Program {
 
 
         BenchmarkRunner.Run<Kyber_Benchmarking>(config);
-
+        BenchmarkRunner.Run<RSA_Benchmarking>(config);
         /*
                      .AddJob(Job.Default.WithToolchain(
                 BenchmarkDotNet.Toolchains.InProcess.NoEmit.InProcessNoEmitToolchain.Instance));
          
          */
+
+        Console.WriteLine("Press any key to exit...");
+        Console.ReadKey();
     }
 }
 

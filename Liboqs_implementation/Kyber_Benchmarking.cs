@@ -28,6 +28,9 @@ namespace Liboqs_implementation {
             _kem = new KyberKEM(AlgorithmName);
             (_publicKey, _secretKey) = _kem.GenerateKeypair();
             (_ciphertext, _) = _kem.Encapsulate(_publicKey);
+            Console.WriteLine("Public Key Length: " + _publicKey.Length);
+            Console.WriteLine("Secret Key Length: " + _secretKey.Length);
+            Console.WriteLine("Ciphertext Length: " + _ciphertext.Length);
         }
 
         [IterationSetup]
