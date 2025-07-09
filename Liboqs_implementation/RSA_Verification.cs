@@ -18,6 +18,7 @@ namespace Liboqs_implementation {
                 using var rsa = RSA.Create(keySizeInBits);
                 // Force key creation
                 _ = rsa.ExportParameters(true);
+                
                 Console.WriteLine("SUCCESS");
 
                 // --- Step 2: Data Preparation ---
@@ -72,8 +73,9 @@ namespace Liboqs_implementation {
 
 
                     Console.WriteLine("RSA-" + keysize);
-                    Console.WriteLine($"Private Key Size: {privateKeyFileSize} Bytes");
                     Console.WriteLine($"Public Key Size: {publicKeyFileSize} Bytes");
+                    Console.WriteLine($"Private Key Size: {privateKeyFileSize} Bytes");
+
                     byte[] dataToEncrypt = new byte[32]; // Some sample data
                     byte[] encryptedData = rsa.Encrypt(dataToEncrypt, RSAEncryptionPadding.OaepSHA256);
 
