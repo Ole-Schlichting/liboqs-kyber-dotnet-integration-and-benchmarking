@@ -2,11 +2,10 @@
 using BenchmarkDotNet.Jobs;
 using System.Security.Cryptography;
 
-namespace Liboqs_implementation {
     [MemoryDiagnoser]
     [MarkdownExporter, RPlotExporter]
     public class RSA_Benchmarking {
-        [Params(2048, 4096)]
+        [Params(2048, 3072, 4096)]
         public int KeySizeInBits { get; set; }
 
         private readonly byte[] _plaintext;
@@ -64,4 +63,7 @@ namespace Liboqs_implementation {
             return _rsa.Decrypt(_ciphertext, _padding);
         }
     }
-}
+
+
+
+

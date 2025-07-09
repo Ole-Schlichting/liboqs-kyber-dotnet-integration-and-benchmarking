@@ -19,7 +19,7 @@ public class Program {
         var config = ManualConfig.CreateEmpty()
             .AddJob(Job.Default.
                 WithWarmupCount(10).
-                WithIterationCount(50))
+                WithIterationCount(1000))
             .AddDiagnoser(MemoryDiagnoser.Default)
             .AddColumnProvider(DefaultColumnProviders.Instance)
             .AddLogger(new ConsoleLogger())
@@ -27,8 +27,8 @@ public class Program {
             .AddColumn(StatisticColumn.Min)
             .AddColumn(StatisticColumn.Max)
             .AddColumn(StatisticColumn.Error)
+            .AddColumn(StatisticColumn.Median)
             .AddColumn(StatisticColumn.OperationsPerSecond);
-
 
             if (args.Length < 2 || args[0].ToLower() != "benchmark" && args[0].ToLower() != "sizes") {
                 Console.WriteLine("Nutzung:");
@@ -37,7 +37,6 @@ public class Program {
                 return;
             }
             Kyber_Verification kyber_Verification = new Kyber_Verification();
-
 
             if (args[0].ToLower() == "sizes") {
                 switch (args[1]) {
@@ -57,8 +56,9 @@ public class Program {
                 switch (args[1].ToLower()) {
                     case "rsa":
                         RSA_Verification.RunValidation(2048);
+                        RSA_Verification.RunValidation(3072);
                         RSA_Verification.RunValidation(4096);
-                        BenchmarkRunner.Run<RSA_Benchmarking>(config);
+                    BenchmarkRunner.Run<RSA_Benchmarking>(config);
                         break;
                     case "kyber":
                         kyber_Verification.Verification("Kyber512");
@@ -66,15 +66,45 @@ public class Program {
                         kyber_Verification.Verification("Kyber1024");
                         BenchmarkRunner.Run<Kyber_Benchmarking>(config);
                         break;
-
+                    case "rsa-7680":
+                        RSA_Verification.RunValidation(7680);
+                        config = ManualConfig.CreateEmpty()
+                        .AddJob(Job.Default.
+                            WithWarmupCount(10).
+                            WithIterationCount(100))
+                        .AddDiagnoser(MemoryDiagnoser.Default)
+                        .AddColumnProvider(DefaultColumnProviders.Instance)
+                        .AddLogger(new ConsoleLogger())
+                        .AddExporter(MarkdownExporter.GitHub)
+                        .AddColumn(StatisticColumn.Min)
+                        .AddColumn(StatisticColumn.Max)
+                        .AddColumn(StatisticColumn.Error)
+                        .AddColumn(StatisticColumn.Median)
+                        .AddColumn(StatisticColumn.OperationsPerSecond);
+                        BenchmarkRunner.Run<RSA_Benchmarking7680>(config);
+                    break;
+                    case "rsa-15360":
+                        RSA_Verification.RunValidation(15360);
+                        config = ManualConfig.CreateEmpty()
+                        .AddJob(Job.Default.
+                            WithWarmupCount(10).
+                            WithIterationCount(100))
+                        .AddDiagnoser(MemoryDiagnoser.Default)
+                        .AddColumnProvider(DefaultColumnProviders.Instance)
+                        .AddLogger(new ConsoleLogger())
+                        .AddExporter(MarkdownExporter.GitHub)
+                        .AddColumn(StatisticColumn.Min)
+                        .AddColumn(StatisticColumn.Max)
+                        .AddColumn(StatisticColumn.Error)
+                        .AddColumn(StatisticColumn.Median)
+                        .AddColumn(StatisticColumn.OperationsPerSecond);
+                        BenchmarkRunner.Run<RSA_Benchmarking15360>(config);
+                    break;
                     default:
                         Console.WriteLine("Unbekannter Benchmark: " + args[1]);
                         break;
                 }
             }
-            
-
-
     }
 }
 

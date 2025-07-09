@@ -64,7 +64,7 @@ namespace Liboqs_implementation {
         }
 
         public static void Sizes() {
-            int[] keysizes = [2048, 4096];
+            int[] keysizes = [2048, 3072, 4096, 7680, 15360];
             foreach(int keysize in keysizes) {
                 using var rsa = RSA.Create(keysize);
 
