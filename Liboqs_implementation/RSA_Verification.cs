@@ -65,48 +65,23 @@ namespace Liboqs_implementation {
 
         public static void Sizes() {
             int[] keysizes = [2048, 3072, 4096, 7680, 15360];
-            foreach(int keysize in keysizes) {
-                using var rsa = RSA.Create(keysize);
+            foreach (int keysize in keysizes) {
+                using (RSA rsa = RSA.Create(keysize)) {
+                    int privateKeyFileSize = rsa.ExportRSAPrivateKey().Length;
+                    int publicKeyFileSize = rsa.ExportSubjectPublicKeyInfo().Length;
 
-                // --- Key Sizes ---
-                // Exporting parameters is the canonical way to get the key components.
-                var publicParams = rsa.ExportParameters(false);
-                var privateParams = rsa.ExportParameters(true);
 
-                long publicKeySize = GetParametersSize(publicParams);
-                long privateKeySize = GetParametersSize(privateParams);
+                    Console.WriteLine("RSA-" + keysize);
+                    Console.WriteLine($"Private Key Size: {privateKeyFileSize} Bytes");
+                    Console.WriteLine($"Public Key Size: {publicKeyFileSize} Bytes");
+                    byte[] dataToEncrypt = new byte[32]; // Some sample data
+                    byte[] encryptedData = rsa.Encrypt(dataToEncrypt, RSAEncryptionPadding.OaepSHA256);
 
-                // --- Ciphertext Size ---
-                // The ciphertext size in RSA is determined by the modulus size.
-                // We encrypt a small dummy payload to get an example ciphertext.
-                byte[] plaintext = new byte[32];
-                byte[] ciphertext = rsa.Encrypt(plaintext, RSAEncryptionPadding.OaepSHA256);
-                int ciphertextSize = ciphertext.Length;
+                    Console.WriteLine($"Ciphertext Size: {encryptedData.Length} Bytes");
+                }
 
-                // --- Signature Size ---
-                // The signature size is also determined by the modulus size.
-                byte[] signature = rsa.SignData(plaintext, HashAlgorithmName.SHA256, RSASignaturePadding.Pss);
-                int signatureSize = signature.Length;
-                Console.WriteLine("RSA " + keysize);
-                Console.WriteLine("publicKeySize: " + publicKeySize);
-                Console.WriteLine("privateKeySize: " + privateKeySize);
-                Console.WriteLine("ciphertextSize: " + ciphertextSize);
-                Console.WriteLine("signatureSize: " + signatureSize);
+
             }
         }
-
-        private static long GetParametersSize(RSAParameters parameters) {
-            // Sum the lengths of all non-null byte arrays in the struct.
-            return (parameters.Modulus?.Length ?? 0) +
-                   (parameters.Exponent?.Length ?? 0) +
-                   (parameters.D?.Length ?? 0) +
-                   (parameters.P?.Length ?? 0) +
-                   (parameters.Q?.Length ?? 0) +
-                   (parameters.DP?.Length ?? 0) +
-                   (parameters.DQ?.Length ?? 0) +
-                   (parameters.InverseQ?.Length ?? 0);
-        }
-
-
     }
 }
