@@ -15,6 +15,8 @@ public class Program {
     cmake --build . --config Release
     */
     public static void Main(string[] args) {
+
+        Kyber_Verification kyber_Verification = new Kyber_Verification();
         // Benchmark Configuration
         var config = ManualConfig.CreateEmpty()
             .AddJob(Job.Default.
@@ -31,14 +33,10 @@ public class Program {
             .AddColumn(StatisticColumn.OperationsPerSecond);
 
             if (args.Length < 2 || args[0].ToLower() != "benchmark" && args[0].ToLower() != "sizes") {
-                Console.WriteLine("Nutzung:");
-                Console.WriteLine("Liboqs_implementation.exe benchmark rsa");
-                Console.WriteLine("Liboqs_implementation.exe benchmark kyber");
                 return;
             }
-            Kyber_Verification kyber_Verification = new Kyber_Verification();
 
-            if (args[0].ToLower() == "sizes") {
+        if (args[0].ToLower() == "sizes") {
                 switch (args[1]) {
                     case "kyber":
                         kyber_Verification.Sizes();

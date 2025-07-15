@@ -49,6 +49,7 @@ public class KyberKEM : IDisposable {
             throw new Exception($"OQS_KEM_keypair failed for {AlgorithmName} with status: {status}");
         }
         return (publicKey, secretKey);
+
     }
 
     public (byte[] Ciphertext, byte[] SharedSecret) Encapsulate(byte[] publicKey) {
@@ -97,17 +98,26 @@ public class KyberKEM : IDisposable {
             _disposed = true;
         }
     }
+    public static class LogHelper {
+        public static void LogByteArray(byte[] data, string name = "Data") {
+            if (data == null) {
+                Console.WriteLine($"{name}: null");
+                return;
+            }
 
+            Console.Write($"{name} ({data.Length} bytes): ");
+
+            if (data.Length == 0) {
+                Console.WriteLine("<empty>");
+                return;
+            }
+
+            string hexString = string.Join(" ", data.Select(b => b.ToString("X2")));
+            Console.WriteLine(hexString);
+        }
+    }
     ~KyberKEM() {
         Dispose(false);
     }
-    static string ToHexString(byte[] bytes) {
-        if (bytes == null) return "null";
-
-        // Ab .NET 5.0 ist dies der einfachste Weg:
-        return Convert.ToHexString(bytes);
-
-        // Für ältere .NET-Frameworks oder als Alternative:
-        // return string.Join("", bytes.Select(b => b.ToString("X2")));
-    }
+    
 }
