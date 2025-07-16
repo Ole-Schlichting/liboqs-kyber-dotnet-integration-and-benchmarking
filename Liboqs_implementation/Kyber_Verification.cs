@@ -8,15 +8,6 @@ using System.Threading.Tasks;
 
 namespace Liboqs_implementation {
     internal class Kyber_Verification {
-        static string ToHexString(byte[] bytes) {
-            if (bytes == null) return "null";
-
-            // Ab .NET 5.0 ist dies der einfachste Weg:
-            return Convert.ToHexString(bytes);
-
-            // Für ältere .NET-Frameworks oder als Alternative:
-            // return string.Join("", bytes.Select(b => b.ToString("X2")));
-        }
         public void Verification(string kyberAlgorithmName) {
             // --- Basic KEM Flow (for verification and warm-up) ---
             Console.WriteLine("\n--- Performing initial KEM flow for verification and JIT warm-up ---");
