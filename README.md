@@ -22,10 +22,10 @@ Running Performance Benchmarks
 To run the performance benchmarks, use the benchmark command followed by the algorithm name.
 Available Commands:
 
-benchmark kyber
-benchmark rsa
-benchmark rsa-7680
-benchmark rsa-15360
+benchmark kyber  
+benchmark rsa  
+benchmark rsa-7680  
+benchmark rsa-15360  
 
 Example:
 To run the benchmark for the Kyber algorithm, execute the following command:
