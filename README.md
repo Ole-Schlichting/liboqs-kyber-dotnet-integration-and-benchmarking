@@ -43,7 +43,7 @@ Measuring Data Sizes
 To measure the size of the generated keys and ciphertexts, use the sizes command.
 Available Commands:
 
-sizes kyber
+sizes kyber  
 sizes rsa
 
 It is not possible to publish this tool as a standalone executable for running the performance benchmarks.
