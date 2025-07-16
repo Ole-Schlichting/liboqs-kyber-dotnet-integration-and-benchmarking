@@ -1,7 +1,5 @@
 ﻿// NativeMethods.cs
-using System;
 using System.Runtime.InteropServices;
-using System.Text; // Required if you use CharSet.Ansi for string marshalling
 
 internal static class NativeMethods {
     private const string OqsDll = "oqs.dll"; // Name of the liboqs DLL

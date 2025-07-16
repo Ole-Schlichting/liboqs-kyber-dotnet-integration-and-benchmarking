@@ -8,7 +8,6 @@ using System.Threading.Tasks;
 
 namespace Liboqs_implementation {
     internal class Kyber_Verification {
-
         public void Verification(string kyberAlgorithmName) {
             // --- Basic KEM Flow (for verification and warm-up) ---
             Console.WriteLine("\n--- Performing initial KEM flow for verification and JIT warm-up ---");
